@@ -71,6 +71,13 @@
           var $carTable = DOM("[data-js=carTable]");
           $carTable.get().appendChild(app.newCar());
         },
+
+        handleDelete: function handleDelete(event){
+          event.preventDefault()
+          var $deletedRow = this.parentNode.parentNode
+          var $table = $deletedRow.parentNode
+          $table.removeChild($deletedRow)
+        },
   
         newCar: function newCar() {
           var $fragment = doc.createDocumentFragment();
@@ -81,10 +88,15 @@
           var $yearTd = doc.createElement("td");
           var $plateTd = doc.createElement("td");
           var $colorTd = doc.createElement("td");
+          var $tdDelete = doc.createElement("td")
+          var $deleteButton = doc.createElement("button");
+
+          $deleteButton.innerHTML = "Deletar"
+          $deleteButton.addEventListener('click',this.handleDelete, false);
+          $tdDelete.appendChild($deleteButton);
 
           $imagem.src = DOM("[data-js=imagem]").get().value;
           $tdImage.appendChild($imagem)
-
           $modelTd.textContent = DOM("[data-js=modelo]").get().value;
           $yearTd.textContent = DOM("[data-js=ano]").get().value;
           $plateTd.textContent = DOM("[data-js=placa]").get().value;
@@ -95,6 +107,7 @@
           $newTr.appendChild($yearTd);
           $newTr.appendChild($plateTd);
           $newTr.appendChild($colorTd);
+          $newTr.appendChild($tdDelete);
   
           return $fragment.appendChild($newTr);
         },
